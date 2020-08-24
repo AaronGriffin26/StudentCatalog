@@ -1,0 +1,10 @@
+{
+	"auth": {
+		"studentcatalog1fc11454": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false
+		}
+	}
+}
