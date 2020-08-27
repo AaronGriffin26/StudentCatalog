@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "auth": {
+      "studentcatalog1fc11454": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    },
+    "storage": {
+      "imagestorage": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
