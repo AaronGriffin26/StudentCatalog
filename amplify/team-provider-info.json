@@ -10,11 +10,6 @@
             "StackName": "amplify-studentcatalog-dev-115519",
             "StackId": "arn:aws:cloudformation:us-east-2:811287121345:stack/amplify-studentcatalog-dev-115519/3801cca0-e622-11ea-9ccd-0256fd477060",
             "AmplifyAppId": "dufkusdegx583"
-        },
-        "categories": {
-            "auth": {
-                "studentcatalog1fc11454": {}
-            }
         }
     }
 }

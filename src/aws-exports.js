@@ -3,20 +3,13 @@
 
 const awsmobile = {
     "aws_project_region": "us-east-2",
-    "aws_cognito_identity_pool_id": "us-east-2:466155cb-ff83-4623-99d1-947fc1eba919",
-    "aws_cognito_region": "us-east-2",
-    "aws_user_pools_id": "us-east-2_lX4nMcPZC",
-    "aws_user_pools_web_client_id": "1jctj1jm78gjd72m25qs2ouin0",
-    "oauth": {},
     "aws_cloud_logic_custom": [
         {
             "name": "studentapi",
             "endpoint": "https://wofxw4a7m4.execute-api.us-east-2.amazonaws.com/dev",
             "region": "us-east-2"
         }
-    ],
-    "aws_user_files_s3_bucket": "studentcatalog-bucket115519-dev",
-    "aws_user_files_s3_bucket_region": "us-east-2"
+    ]
 };
 
 

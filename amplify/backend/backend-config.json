@@ -1,12 +1,5 @@
 {
-    "auth": {
-        "studentcatalog1fc11454": {
-            "service": "Cognito",
-            "providerPlugin": "awscloudformation",
-            "dependsOn": [],
-            "customAuth": false
-        }
-    },
+    "auth": {},
     "api": {
         "studentapi": {
             "service": "API Gateway",
@@ -23,33 +16,13 @@
             ]
         }
     },
-    "storage": {
-        "imagestorage": {
-            "service": "S3",
-            "providerPlugin": "awscloudformation"
-        }
-    },
+    "storage": {},
     "function": {
         "studentfunction": {
             "build": true,
             "providerPlugin": "awscloudformation",
             "service": "Lambda",
-            "dependsOn": [
-                {
-                    "category": "auth",
-                    "resourceName": "studentcatalog1fc11454",
-                    "attributes": [
-                        "UserPoolId"
-                    ]
-                },
-                {
-                    "category": "storage",
-                    "resourceName": "imagestorage",
-                    "attributes": [
-                        "BucketName"
-                    ]
-                }
-            ]
+            "dependsOn": []
         }
     }
 }
