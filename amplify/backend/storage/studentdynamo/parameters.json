@@ -1,0 +1,7 @@
+{
+    "tableName": "studentdynamo",
+    "partitionKeyName": "id",
+    "partitionKeyType": "N",
+    "sortKeyName": "lastName",
+    "sortKeyType": "S"
+}

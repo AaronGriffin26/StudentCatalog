@@ -1,0 +1,34 @@
+{
+    "paths": [
+        {
+            "name": "/student",
+            "lambdaFunction": "studentfunction",
+            "privacy": {
+                "open": true
+            }
+        }
+    ],
+    "resourceName": "studentapi",
+    "apiName": "studentapi",
+    "functionArns": [
+        {
+            "lambdaFunction": "studentfunction"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "amplify-studentcatalog-dev-115519-authRole",
+        "unAuthRoleName": "amplify-studentcatalog-dev-115519-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "studentfunction",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}
