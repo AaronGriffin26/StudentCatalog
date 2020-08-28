@@ -9,18 +9,20 @@ export default class StudentViewComponent extends Component {
             body: {
                 firstName: 'Aaron',
                 lastName: 'Griffin'
-            }
+            },
         }).then(response => {
-            console.log('success, post response: ' + response)
-            this.setState({postResponse: response})
+            console.log(response)
+            this.setState({postResponse: response.body})
         }).catch(error => {
             console.log('error posting, response: ' + error)
+            this.setState({postResponse: error.body})
         })
         API.get('studentapi', '/student').then(response => {
-            console.log('success, get response: ' + response)
-            this.setState({students: response.students, getResponse: response})
+            console.log(response)
+            this.setState({students: response.students, getResponse: response.body})
         }).catch(error => {
             console.log('error fetching, response: ' + error)
+            this.setState({getResponse: error.body})
         })
     }
 

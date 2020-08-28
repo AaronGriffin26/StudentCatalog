@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import Amplify from 'aws-amplify';
+import Amplify, {API} from 'aws-amplify';
 import config from './aws-exports';
 import App from "./App";
 import {BrowserRouter} from "react-router-dom";
 
 Amplify.configure(config);
+API.configure(config);
 
 ReactDOM.render(
     <React.StrictMode>
