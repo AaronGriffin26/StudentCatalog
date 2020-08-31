@@ -1,13 +1,14 @@
 ﻿import React from "react";
 import './App.css';
 import RouterComponent from "./RouterComponent";
+import {config} from "./config";
 
 export default function App() {
     return (
         <div className="App">
             <div className="Container">
                 <div id="page-wrapper">
-                    <RouterComponent/>
+                    {config.maintenance ? <p>Website currently down for maintenance!</p> : <RouterComponent/>}
                 </div>
             </div>
             <footer>
