@@ -27,7 +27,7 @@ export default class ProfesorViewComponent extends Component {
     }
 
     async componentDidMount() {
-        pollStudents()
+        this.pollStudents()
     }
 
     onSubmit(e) {
@@ -58,7 +58,7 @@ export default class ProfesorViewComponent extends Component {
             }).then(response => {
                 console.log(response)
                 this.setState({postResponse: response.body, postErrorResponse: ""})
-                pollStudents()
+                this.pollStudents()
             }).catch(error => {
                 console.log('error posting')
                 console.log(error)
@@ -90,7 +90,7 @@ export default class ProfesorViewComponent extends Component {
         this.setState({ssn: e.target.value, ssnError: ''})
     }
 
-    pollStudents() {
+    async pollStudents() {
         API.get('studentapi', '/student').then(response => {
             console.log(response)
             this.setState({students: response.students})
