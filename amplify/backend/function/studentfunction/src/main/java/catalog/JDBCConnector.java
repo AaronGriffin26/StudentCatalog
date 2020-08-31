@@ -22,9 +22,10 @@ public class JDBCConnector {
                 String password = System.getenv("RDS_PASSWORD");
                 String hostname = System.getenv("RDS_HOSTNAME");
                 String port = System.getenv("RDS_PORT");
-                String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password;
+                String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName;
                 logger.log("Getting remote connection with connection string from environment variables.");
-                Connection con = DriverManager.getConnection(jdbcUrl);
+                logger.log("jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password);
+                Connection con = DriverManager.getConnection(jdbcUrl, userName, password);
                 logger.log("Remote connection successful.");
                 return con;
             } catch (ClassNotFoundException | SQLException e) {

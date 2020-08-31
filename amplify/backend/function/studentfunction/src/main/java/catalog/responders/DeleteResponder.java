@@ -1,7 +1,7 @@
 package catalog.responders;
 
 import catalog.BadRequestException;
-import catalog.SimpleResponse;
+import catalog.responses.SimpleResponse;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 

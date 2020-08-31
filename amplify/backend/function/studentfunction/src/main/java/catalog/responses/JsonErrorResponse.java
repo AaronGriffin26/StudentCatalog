@@ -1,4 +1,4 @@
-package catalog;
+package catalog.responses;
 
 public class JsonErrorResponse {
     String body;

@@ -1,4 +1,4 @@
-package catalog;
+package catalog.responses;
 
 import catalog.entities.StudentInfo;
 

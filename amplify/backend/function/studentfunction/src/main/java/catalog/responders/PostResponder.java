@@ -2,8 +2,7 @@ package catalog.responders;
 
 import catalog.BadRequestException;
 import catalog.JDBCConnector;
-import catalog.entities.FirstNameLastName;
-import catalog.SimpleResponse;
+import catalog.responses.SimpleResponse;
 import catalog.entities.StudentInfo;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;

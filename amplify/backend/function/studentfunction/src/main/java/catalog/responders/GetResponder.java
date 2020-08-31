@@ -1,7 +1,10 @@
 package catalog.responders;
 
 import catalog.*;
+import catalog.entities.FirstNameLastName;
 import catalog.entities.StudentInfo;
+import catalog.responses.NamesResponse;
+import catalog.responses.StudentsResponse;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 
@@ -16,6 +19,8 @@ public class GetResponder {
         String path = request.getPath();
         if (path.equals("/student") || path.equals("/student/"))
             return new StudentsResponse(getAllStudents(context));
+        if (path.equals("/name") || path.equals("/name/"))
+            return new NamesResponse(getAllStudentNames(context));
         if (path.startsWith("/student/")) {
             try {
                 int ssn = Integer.parseInt(path.substring(9));
@@ -54,6 +59,41 @@ public class GetResponder {
             list.add(new StudentInfo(123456789, "Null", "Pointer"));
             list.add(new StudentInfo(333559999, "Exception", "PlsFix"));
             return list.toArray(new StudentInfo[0]);
+        } finally {
+            if (conn != null) try {
+                conn.close();
+            } catch (SQLException ignore) {
+            }
+            context.getLogger().log("Closed connection");
+        }
+    }
+
+    private static FirstNameLastName[] getAllStudentNames(Context context) throws SQLException {
+        Connection conn = null;
+        try {
+            context.getLogger().log("Attempting to connect");
+            conn = JDBCConnector.getRemoteConnection(context);
+            assert conn != null;
+            Statement readStatement = conn.createStatement();
+            ResultSet resultSet = readStatement.executeQuery("SELECT first_name, last_name FROM student_info;");
+            resultSet.first();
+            var list = new ArrayList<FirstNameLastName>();
+            int count = resultSet.getFetchSize();
+            context.getLogger().log("Retrieved " + count + " items");
+            do {
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                var si = new FirstNameLastName(firstName, lastName);
+                list.add(si);
+            } while (resultSet.next());
+            resultSet.close();
+            readStatement.close();
+            return list.toArray(new FirstNameLastName[0]);
+        } catch (NullPointerException e) {
+            var list = new ArrayList<FirstNameLastName>();
+            list.add(new FirstNameLastName("Null", "Pointer"));
+            list.add(new FirstNameLastName("Exception", "PlsFix"));
+            return list.toArray(new FirstNameLastName[0]);
         } finally {
             if (conn != null) try {
                 conn.close();
