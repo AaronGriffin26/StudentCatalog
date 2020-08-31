@@ -69,7 +69,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-studentcatalog-dev-115519-deployment",
-					"S3Key": "amplify-builds/studentfunction-5a7a2b586472707a594b-build.zip"
+					"S3Key": "amplify-builds/studentfunction-54494e774b5044593752-build.zip"
 				}
 			}
 		},
