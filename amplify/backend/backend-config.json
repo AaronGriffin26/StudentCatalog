@@ -1,68 +1,53 @@
 {
-	"auth": {},
-	"api": {
-		"studentapi": {
-			"service": "API Gateway",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": [
-				{
-					"category": "function",
-					"resourceName": "studentfunction",
-					"attributes": [
-						"Name",
-						"Arn"
-					]
-				}
-			]
-		}
-	},
-	"storage": {
-		"studentdynamo": {
-			"service": "DynamoDB",
-			"providerPlugin": "awscloudformation"
-		}
-	},
-	"function": {
-		"studentfunction": {
-			"build": true,
-			"providerPlugin": "awscloudformation",
-			"service": "Lambda",
-			"dependsOn": [
-				{
-					"category": "storage",
-					"resourceName": "studentdynamo",
-					"attributes": [
-						"Name",
-						"Arn",
-						"StreamArn"
-					]
-				}
-			]
-		},
-		"studentlayer": {
-			"runtimes": [
-				{
-					"value": "nodejs",
-					"name": "NodeJS",
-					"layerExecutablePath": "nodejs\\node_modules",
-					"cloudTemplateValue": "nodejs12.x"
-				}
-			],
-			"layerVersionMap": {
-				"1": {
-					"permissions": [
-						{
-							"type": "public"
-						},
-						{
-							"type": "private"
-						}
-					]
-				}
-			},
-			"providerPlugin": "awscloudformation",
-			"service": "LambdaLayer",
-			"build": true
-		}
-	}
+    "auth": {},
+    "api": {
+        "studentapi": {
+            "service": "API Gateway",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": [
+                {
+                    "category": "function",
+                    "resourceName": "studentfunction",
+                    "attributes": [
+                        "Name",
+                        "Arn"
+                    ]
+                }
+            ]
+        }
+    },
+    "storage": {},
+    "function": {
+        "studentfunction": {
+            "build": true,
+            "providerPlugin": "awscloudformation",
+            "service": "Lambda",
+            "dependsOn": []
+        },
+        "studentlayer": {
+            "runtimes": [
+                {
+                    "value": "nodejs",
+                    "name": "NodeJS",
+                    "layerExecutablePath": "nodejs\\node_modules",
+                    "cloudTemplateValue": "nodejs12.x"
+                }
+            ],
+            "layerVersionMap": {
+                "1": {
+                    "permissions": [
+                        {
+                            "type": "public"
+                        },
+                        {
+                            "type": "private"
+                        }
+                    ]
+                }
+            },
+            "providerPlugin": "awscloudformation",
+            "service": "LambdaLayer",
+            "build": true
+        }
+    }
 }

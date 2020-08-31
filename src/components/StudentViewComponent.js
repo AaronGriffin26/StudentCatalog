@@ -14,15 +14,17 @@ export default class StudentViewComponent extends Component {
             console.log(response)
             this.setState({postResponse: response.body})
         }).catch(error => {
-            console.log('error posting, response: ' + error)
-            this.setState({postResponse: error.body})
+            console.log('error posting')
+            console.log(error)
+            this.setState({postResponse: "ERROR!"})
         })
         API.get('studentapi', '/student').then(response => {
             console.log(response)
             this.setState({students: response.students, getResponse: response.body})
         }).catch(error => {
-            console.log('error fetching, response: ' + error)
-            this.setState({getResponse: error.body})
+            console.log('error fetching')
+            console.log(error)
+            this.setState({getResponse: "ERROR!"})
         })
     }
 
@@ -32,15 +34,15 @@ export default class StudentViewComponent extends Component {
                 <h3>Student View</h3>
                 <div>Post: {this.state.postResponse}</div>
                 <div>Get: {this.state.getResponse}</div>
-                {/*{*/}
-                {/*    this.state.students.map((student, i) => (*/}
-                {/*        <div>*/}
-                {/*            <p>First: {student.firstName}</p>*/}
-                {/*            <p>Last: {student.lastName}</p>*/}
-                {/*            <p>SSN: {student.ssn}</p>*/}
-                {/*        </div>*/}
-                {/*    ))*/}
-                {/*}*/}
+                {
+                    this.state.students.map((student, i) => (
+                        <div key={i}>
+                            <p>First: {student.firstName}</p>
+                            <p>Last: {student.lastName}</p>
+                            <p>SSN: {student.ssn}</p>
+                        </div>
+                    ))
+                }
             </div>
         )
     }

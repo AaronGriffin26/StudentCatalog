@@ -11,7 +11,8 @@ export default function App() {
                 </div>
             </div>
             <footer>
-                Website by Aaron Griffin. Backend developed by Aaron Griffin using Amazon Web Services.
+                Website by Aaron Griffin. Backend developed by Aaron Griffin using Amazon Web Services.<br/>
+                <b>Disclaimer</b>: Currently having connection issues with Amazon RDS.
             </footer>
         </div>
     )
