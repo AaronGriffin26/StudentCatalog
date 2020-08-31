@@ -9,7 +9,6 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.google.gson.Gson;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -30,11 +29,9 @@ public class PostResponder {
             Statement readStatement = conn.createStatement();
             var gson = new Gson();
             StudentInfo student = gson.fromJson(request.getBody(), StudentInfo.class);
-            ResultSet resultSet = readStatement.executeQuery("INSERT INTO student_info (ssn, first_name, last_name) values (" + student.ssn + ", " + student.firstName + ", " + student.lastName + ");");
-            boolean success = resultSet.rowInserted();
-            resultSet.close();
+            int rowsInserted = readStatement.executeUpdate("INSERT INTO student_info (ssn, first_name, last_name) values (" + student.ssn + ", \"" + student.firstName + "\", \"" + student.lastName + "\");");
             readStatement.close();
-            if (success)
+            if (rowsInserted > 0)
                 return new SimpleResponse("New student info inserted");
             return new SimpleResponse("Failed to insert student");
         } catch (NullPointerException e) {

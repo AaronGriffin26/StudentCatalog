@@ -8,7 +8,6 @@ import catalog.responses.NamesResponse;
 import catalog.responses.StudentsResponse;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
-import com.google.gson.Gson;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -21,8 +20,6 @@ public class GetResponder {
         String path = request.getPath();
         if (path.equals("/student") || path.equals("/student/"))
             return new StudentsResponse(getAllStudents(context));
-        if (path.equals("/test") || path.equals("/test/"))
-            return new StudentsResponse(getAllStudentsTest(context));
         if (path.equals("/name") || path.equals("/name/"))
             return new NamesResponse(getAllStudentNames(context));
         if (path.startsWith("/student/")) {
@@ -44,54 +41,14 @@ public class GetResponder {
             assert conn != null;
             Statement readStatement = conn.createStatement();
             ResultSet resultSet = readStatement.executeQuery("SELECT * FROM student_info;");
-            resultSet.first();
             var list = new ArrayList<StudentInfo>();
-            int count = resultSet.getFetchSize();
-            context.getLogger().log("Retrieved " + count + " items");
-            do {
+            while (resultSet.next()) {
                 int ssn = resultSet.getInt("ssn");
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
                 var si = new StudentInfo(ssn, firstName, lastName);
                 list.add(si);
-            } while (resultSet.next());
-            resultSet.close();
-            readStatement.close();
-            return list.toArray(new StudentInfo[0]);
-        } catch (NullPointerException e) {
-            var list = new ArrayList<StudentInfo>();
-            list.add(new StudentInfo(123456789, "Null", "Pointer"));
-            list.add(new StudentInfo(333559999, "Exception", "PlsFix"));
-            return list.toArray(new StudentInfo[0]);
-        } finally {
-            if (conn != null)
-                try {
-                    conn.close();
-                } catch (SQLException ignore) {
-                }
-            context.getLogger().log("Closed connection");
-        }
-    }
-
-    private static StudentInfo[] getAllStudentsTest(Context context) throws SQLException {
-        Connection conn = null;
-        try {
-            context.getLogger().log("Attempting to connect");
-            conn = JDBCConnector.getRemoteConnectionTest(context);
-            assert conn != null;
-            Statement readStatement = conn.createStatement();
-            ResultSet resultSet = readStatement.executeQuery("SELECT * FROM student_info;");
-            var list = new ArrayList<StudentInfo>();
-            int count = resultSet.getFetchSize();
-            context.getLogger().log("Retrieved " + count + " items");
-            context.getLogger().log("Result set " + new Gson().toJson(resultSet));
-            do {
-                int ssn = resultSet.getInt("ssn");
-                String firstName = resultSet.getString("first_name");
-                String lastName = resultSet.getString("last_name");
-                var si = new StudentInfo(ssn, firstName, lastName);
-                list.add(si);
-            } while (resultSet.next());
+            }
             resultSet.close();
             readStatement.close();
             return list.toArray(new StudentInfo[0]);
@@ -118,16 +75,13 @@ public class GetResponder {
             assert conn != null;
             Statement readStatement = conn.createStatement();
             ResultSet resultSet = readStatement.executeQuery("SELECT first_name, last_name FROM student_info;");
-            resultSet.first();
             var list = new ArrayList<FirstNameLastName>();
-            int count = resultSet.getFetchSize();
-            context.getLogger().log("Retrieved " + count + " items");
-            do {
+            while (resultSet.next()) {
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
                 var si = new FirstNameLastName(firstName, lastName);
                 list.add(si);
-            } while (resultSet.next());
+            }
             resultSet.close();
             readStatement.close();
             return list.toArray(new FirstNameLastName[0]);
@@ -154,7 +108,7 @@ public class GetResponder {
             assert conn != null;
             Statement readStatement = conn.createStatement();
             ResultSet resultSet = readStatement.executeQuery("SELECT * FROM student_info WHERE ssn = " + ssn + ";");
-            resultSet.first();
+            resultSet.next();
             String firstName = resultSet.getString("first_name");
             String lastName = resultSet.getString("last_name");
             var si = new StudentInfo(ssn, firstName, lastName);

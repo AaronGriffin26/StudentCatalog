@@ -23,17 +23,11 @@ export default class ProfesorViewComponent extends Component {
         this.handleFirstName = this.handleFirstName.bind(this)
         this.handleLastName = this.handleLastName.bind(this)
         this.handleSSN = this.handleSSN.bind(this)
+        this.pollStudents = this.pollStudents.bind(this)
     }
 
     async componentDidMount() {
-        API.get('studentapi', '/student').then(response => {
-            console.log(response)
-            this.setState({students: response.students})
-        }).catch(error => {
-            console.log('error fetching')
-            console.log(error)
-            this.setState({getResponse: "ERROR!"})
-        })
+        pollStudents()
     }
 
     onSubmit(e) {
@@ -64,6 +58,7 @@ export default class ProfesorViewComponent extends Component {
             }).then(response => {
                 console.log(response)
                 this.setState({postResponse: response.body, postErrorResponse: ""})
+                pollStudents()
             }).catch(error => {
                 console.log('error posting')
                 console.log(error)
@@ -93,6 +88,17 @@ export default class ProfesorViewComponent extends Component {
 
     handleSSN(e) {
         this.setState({ssn: e.target.value, ssnError: ''})
+    }
+
+    pollStudents() {
+        API.get('studentapi', '/student').then(response => {
+            console.log(response)
+            this.setState({students: response.students})
+        }).catch(error => {
+            console.log('error fetching')
+            console.log(error)
+            this.setState({getResponse: "ERROR!"})
+        })
     }
 
     render() {
